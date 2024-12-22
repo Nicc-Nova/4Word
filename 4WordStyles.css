@@ -31,3 +31,9 @@
 #buttons{
     text-align: center;
 }
+
+#explanation{
+    text-align: center;
+    color: whitesmoke;
+    font-size: 25px;
+}

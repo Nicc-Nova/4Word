@@ -22,7 +22,7 @@ var box15 = document.getElementById("box15");
 var box16 = document.getElementById("box16");
 
 //4x4 array of textbox objects
-let boxes=[
+const boxes=[
     [box1,box2,box3,box4],
     [box5,box6,box7,box8],
     [box9,box10,box11,box12],
@@ -30,7 +30,7 @@ let boxes=[
 ];
 
 //create array of answers from ans.txt
-var answers = ["acid", "acre", "aged", "aide", "akin", "alas", "ally", "also", "alto", "amid", "anal", "anna", "anti", "apex",
+var answers = ["acid","acid", "acre", "aged", "aide", "akin", "alas", "ally", "also", "alto", "amid", "anal", "anna", "anti", "apex",
  "arch", "area", "army", "atom", "atop", "aunt", "aura", "auto", "avid", "away", "axis", "baby", "bach", "back", "bail", "bait",
   "bake", "bald", "ball", "band", "bang", "bank", "bare", "bark", "barn", "base", "bass", "bath", "bats", "beam", "bean", "bear",
    "beat", "beck", "beef", "been", "beer", "bell", "belt", "bend", "bent", "best", "beta", "beth", "bias", "bike", "bill", "bind",
@@ -96,7 +96,7 @@ var answers = ["acid", "acre", "aged", "aide", "akin", "alas", "ally", "also", "
     "ware", "warm", "warn", "wary", "wash", "watt", "wave", "ways", "weak", "wear", "weed", "week", "well", "went", "were", 
     "west", "what", "when", "whip", "whom", "wide", "wife", "wild", "will", "wind", "wine", "wing", "wipe", "wire", "wise", 
     "wish", "with", "woke", "wolf", "wood", "wool", "word", "wore", "work", "worm", "worn", "wrap", "yang", "yard", "yarn", 
-    "yeah", "year", "your", "yuan", "zero", "zinc", "zone", "zoom"];
+    "yeah", "year", "your", "yuan", "zero", "zinc", "zone", "zoom", "zoom"];
 
 // array showing if entries correct or not
 let entries = [
@@ -141,10 +141,39 @@ checkAns.onclick = function() {
             }
         }
     }
-    //need to do columns
-
-    //need to check if all correct
-    // need to if true: pop up alert congrats!
+    //do columns
+    for(let i=0; i<boxes.length; i++){/*for each column*/
+        let word='';
+        for(let j=0; j<boxes[i].length; j++){
+            word+=boxes[j][i].value;
+        }
+        //alert(word);
+        if(findAns(word)==true){
+            for(let j=0; j<boxes[i].length; j++){
+                if(entries[j][i]==true){
+                    boxes[j][i].style.background = '#00cc00';
+                }
+            }
+        } else{
+            for(let j=0; j<boxes[i].length; j++){
+                //need to mark red
+                entries[j][i]=false;
+                boxes[j][i].style.background = '#e60000';
+            }
+        }
+    }
+    //check if all correct
+    let done = true;
+    for(let i=0; i<entries.length; i++){
+        for(let j=0; j<entries[i].length; j++){
+            if(entries[i][j]==false){
+                done=false;
+            }
+        }
+    }
+    if(done){
+        alert("Nice job! You solved the puzzle.")
+    }
 };
   
 
@@ -161,6 +190,11 @@ newGame.onclick = function() {
             boxes[i][j].value = "";
         }
     }
+    let word = answers[Math.floor(Math.random() * 1001) + 1];
+    boxes[0][0].value=word[0]
+    boxes[0][1].value=word[1]
+    boxes[0][2].value=word[2]
+    boxes[0][3].value=word[3]
 }
 
 //binary search for answer
